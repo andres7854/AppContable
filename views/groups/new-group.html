@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear un grupo nuevo</title>
+    
+    <!-- Css Bootstrap -->
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.min.css">
+
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="../../static/css/groups/group-creation-deletion.css">
+
+</head>
+
+<body>
+    
+    
+
+    <div class="creationForm">
+
+        <form id="accountCreationForm">
+                
+            <h4>¿Desea crear un nuevo grupo?</h4>
+            <br>
+            <input type="text" id="name" placeholder="Nombre del grupo" autofocus required="true">
+            <br>
+            <br>
+            <input type="text" id="description" placeholder="descripcion del grupo" required="true">
+            <br>
+            <br>
+            <p class="card-text">el siguiente campo de texto es la contraseña de este grupo si no se escoje ninguna esta quedara por defecto como 1234 recuerde que esta misma sera usada en caso de querer eliminarlo</p>
+            <input type="password" id="password" value="1234" required="true">
+            <br>
+            <br>
+            <button type="submit" class="btn btn-dark" id="groupCreationFormSubmitBtn">Crear Grupo</button>
+
+        </form>
+
+    </div>
+
+    
+    <script src="../../static/js/groups/group-creation.js"></script>
+</body>
+
+</html>

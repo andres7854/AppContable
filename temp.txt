@@ -1,0 +1,87 @@
+ipcRenderer.on('newGroupEvent', (e, newGroup) => {
+
+    saveNewGroup(newGroup);
+
+    var groups = document.querySelectorAll(".card")
+
+    var numberOfGroups = groups.length;
+
+    const groupName = newGroup.groupName;
+    const groupDescription = newGroup.groupDescription;
+    const groupPassword = newGroup.groupPassword;
+
+    if (numberOfGroups < maxNumberOfRows) {
+       
+        const newGroupTemplate = `
+            <div class="row-xs-4 p-2">
+            
+                <div class="card" style="width: 25vw;">
+                    <div class="card-body">
+                        
+                        <h5 class="card-title">${groupName}</h5>
+                        
+                        <input type="hidden" class="password" value="${groupPassword}">
+                        
+                        <p class="card-text">${groupDescription}</p>
+                        
+                        <button type="button" class="btn btn-success">Abrir</button>
+                        <button type="button" class="btn btn-success">Editar</button>
+
+                    </div>
+                </div>
+
+            </div> 
+        
+        `;
+
+        currentGroupsContainer.innerHTML += newGroupTemplate
+
+    }else{
+
+        maxNumberOfRows = maxNumberOfRows+3;
+
+        var maxNumberOfRowsId = maxNumberOfRows.toString();
+
+        const body = document.getElementById('bodyToModify');
+
+        const newDivTemplate = `
+        
+            <div class="container px-4" id="${maxNumberOfRowsId}">
+                
+
+
+            </div> 
+
+        `;
+
+        body.innerHTML += newDivTemplate;
+
+        currentGroupsContainer = document.getElementById(maxNumberOfRowsId);
+
+        const newGroupTemplate = `
+            <div class="row-xs-4 p-2">
+            
+                <div class="card" style="width: 25vw;">
+                    <div class="card-body">
+                        
+                        <h5 class="card-title">${groupName}</h5>
+                        
+                        <input type="hidden" class="password" value="${groupPassword}">
+                        
+                        <p class="card-text">${groupDescription}</p>
+                        
+                        <button type="button" class="btn btn-success">Editar</button>
+                        <button type="button" class="btn btn-danger">Eliminar</button>
+
+                    </div>
+                </div>
+
+            </div> 
+        
+        `;
+
+        currentGroupsContainer.innerHTML += newGroupTemplate;
+
+    }
+
+}) 

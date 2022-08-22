@@ -1,0 +1,23 @@
+.creationForm{
+    
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+    padding-top: 1cm;
+
+}
+
+.deletionForm{
+    
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+    padding-top: 1cm;
+
+}

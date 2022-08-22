@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Contable</title>
+    
+    <!-- Css Bootstrap -->
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.min.css">
+
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="../../static/css/groups/group-creation-deletion.css">
+
+</head>
+
+<body>
+    
+    
+
+    <div class="deletionForm">
+
+        <form id="groupDeletionForm">
+                
+            <h4>¿Desea ELIMINAR un grupo?</h4>
+            <br>
+            <input type="text" id="name" placeholder="Nombre del grupo" autofocus>
+            <br>
+            <br>
+            <input type="password" id="password" required="true" placeholder="contraseña">
+            <br>
+            <br>
+            <input type="password" id="passwordConfirmation" required="true" placeholder="confirme la contraseña">
+            <br>
+            <br>
+            <button type="submit" class="btn btn-danger" id="accountDeletionFormSubmitBtn">ELIMINAR</button>
+
+        </form>
+
+    </div>
+
+    
+    <script src="../../static/js/groups/group-deletion.js"></script>
+</body>
+
+</html>
