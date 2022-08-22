@@ -16,7 +16,7 @@ function editGroupWindowF() {
 
         width: 800,
         height: 600,
-        title: "Añadir un grupo nuevo",
+        title: "Editar un grupo",
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -26,7 +26,7 @@ function editGroupWindowF() {
 
     const mainMenu = Menu.buildFromTemplate(templateMenu);
     Menu.setApplicationMenu(mainMenu);
-    editGroupWindow.loadFile('../src/views/groups/new-group.html');
+    editGroupWindow.loadFile('../src/views/groups/edit-group.html');
 
     editGroupWindow.on('closed', () => {
         editGroupWindow = null;
@@ -37,8 +37,9 @@ function editGroupWindowF() {
 
 //DETECCION DE EVENTOS CREACION DE VENTANA DE NUEVO GRUPO
 
-ipcMain.on('groupCreationWindow', (e) => {
+ipcMain.on('editGroupWindow', (e) => {
 
+    console.log('llega el evento');
     editGroupWindowF();
 
 })

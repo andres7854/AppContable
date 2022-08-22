@@ -101,27 +101,30 @@ function createGroupElement(group) {
                         <p class="card-text">${group.groupDescription}</p>
                         
                         <button type="button" class="btn btn-success" id="${currentNumberOfGroup}">Abrir</button>
-                        <button type="button" class="btn btn-success" id="${group.name}">Editar</button>
+                        <button type="button" class="btn btn-success" id="${group.groupName}">Editar</button>
 
                     </div>
                 </div>
 
+                <script> 
+
+                    const { ipcRenderer } = require('electron');
+                    const editGroupBtn = document.getElementById('${group.groupName}');
+                    const openGroupBtn = document.getElementById('${currentNumberOfGroup}');
+
+                    const groupName = '${group.groupName}';
+
+                    editGroupBtn.addEventListener('click', (e) => {
+
+                        console.log('detectado');
+                        ipcRenderer.send('editGroupWindow', groupName);
+
+                    })
+
+                </script>
+
             </div>
-            <script> 
-
-                const { ipcRenderer } = require('electron');
-                const editGroupBtn = document.getElementById('${group.groupName}');
-                const openGroupBtn = document.getElementById('${currentNumberOfGroup}');
-
-                const groupName = '${group.groupName}';
-
-                editGroupBtn.addEventListener('click', (e) => {
-
-                    ipcRenderer.send('editGroupWindow', groupName);
-
-                })
-
-            </script>
+            
 
         `;
 

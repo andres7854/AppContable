@@ -6,6 +6,8 @@ const groupsCreationWindow = require('./windows/groups/group-creation-window');
 
 const groupsDeletionWindow = require('./windows/groups/group-deletion-window');
 
+const groupsEditWindow = require('./windows/groups/group-edit-window');
+
 // REQUERIMENTO DE MODULOS DE NODE.JS
 
 const { app, BrowserWindow, Menu, autoUpdater, ipcMain, ipcRenderer } = require('electron');
