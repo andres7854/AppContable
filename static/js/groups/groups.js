@@ -1,7 +1,6 @@
-const { ipcRenderer, ipcMain } = require('electron');
+const { ipcRenderer } = require('electron');
 const createGroupBtn = document.getElementById('createGroupBtn');
 const deleteGroupBtn = document.getElementById('deleteGroupBtn');
-
 
 
 //INICIO DE EVENTO CREACION DE GRUPOS
@@ -101,13 +100,20 @@ function createGroupElement(group) {
                         
                         <p class="card-text">${group.groupDescription}</p>
                         
-                        <button type="button" class="btn btn-success">Abrir</button>
-                        <button type="button" class="btn btn-success">Editar</button>
+                        <button type="button" class="btn btn-success" id="${currentNumberOfGroup}">Abrir</button>
+                        <button type="button" class="btn btn-success" id="${group.name}">Editar</button>
 
                     </div>
                 </div>
 
             </div>
+            <script> 
+
+                const { ipcRenderer } = require('electron');
+                const editGroupBtn = document.getElementById('${group.name}');
+                const openGroupBtn = document.getElementById('${currentNumberOfGroup}');
+
+            </script>
 
         `;
 
