@@ -110,8 +110,16 @@ function createGroupElement(group) {
             <script> 
 
                 const { ipcRenderer } = require('electron');
-                const editGroupBtn = document.getElementById('${group.name}');
+                const editGroupBtn = document.getElementById('${group.groupName}');
                 const openGroupBtn = document.getElementById('${currentNumberOfGroup}');
+
+                const groupName = '${group.groupName}';
+
+                editGroupBtn.addEventListener('click', (e) => {
+
+                    ipcRenderer.send('editGroupWindow', groupName);
+
+                })
 
             </script>
 
