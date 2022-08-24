@@ -1,6 +1,6 @@
 // REQUERIMENTO DE MODULOS DE NODE.JS
 
-const { BrowserWindow, Menu, ipcMain } = require('electron');
+const { BrowserWindow, Menu, ipcMain, ipcRenderer } = require('electron');
 
 
 //DECLARACION E INICIO DE FUNCION CREACION DE VENTANA DE NUEVO GRUPO
@@ -37,10 +37,11 @@ function editGroupWindowF() {
 
 //DETECCION DE EVENTOS CREACION DE VENTANA DE NUEVO GRUPO
 
-ipcMain.on('editGroupWindow', (e) => {
+ipcMain.on('editGroupWindow', (e, groupName) => {
 
-    console.log('llega el evento');
     editGroupWindowF();
+
+    editGroupWindow.webContents.send('editGroupWindow', groupName);
 
 })
 

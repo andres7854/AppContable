@@ -87,6 +87,8 @@ function createGroupElement(group) {
     if (numberOfGroups < maxNumberOfRows) {
 
         currentNumberOfGroup = currentNumberOfGroup+1;
+
+        const bodyOfScripts = document.getElementById('bodyOfScripts');
        
         const newGroupTemplate = `
 
@@ -101,27 +103,11 @@ function createGroupElement(group) {
                         <p class="card-text">${group.groupDescription}</p>
                         
                         <button type="button" class="btn btn-success" id="${currentNumberOfGroup}">Abrir</button>
-                        <button type="button" class="btn btn-success" id="${group.groupName}">Editar</button>
+                        <button type="button" class="btn btn-success" onclick="editGroup(groupNameToEdit = '${group.groupName}')">Editar</button>
 
                     </div>
                 </div>
 
-                <script> 
-
-                    const { ipcRenderer } = require('electron');
-                    const editGroupBtn = document.getElementById('${group.groupName}');
-                    const openGroupBtn = document.getElementById('${currentNumberOfGroup}');
-
-                    const groupName = '${group.groupName}';
-
-                    editGroupBtn.addEventListener('click', (e) => {
-
-                        console.log('detectado');
-                        ipcRenderer.send('editGroupWindow', groupName);
-
-                    })
-
-                </script>
 
             </div>
             
@@ -148,7 +134,6 @@ function createGroupElement(group) {
         //renderizacion del nuevo grupo en el DOM
 
         containerToWrite.innerHTML += newGroupTemplate;
-        
 
     }else{
 
@@ -224,6 +209,16 @@ function createGroupElement(group) {
         currentNumberOfGroup = 0;
 
     }
+
+}
+
+
+//FUNCION DE CREACION DE VENTANA DE EDICION DE GRUPOS
+function editGroup(groupNameToEdit) {
+
+    var groupName = groupNameToEdit;
+    
+    ipcRenderer.send('editGroupWindow', groupName);
 
 }
 
