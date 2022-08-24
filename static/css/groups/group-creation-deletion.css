@@ -9,7 +9,12 @@
     padding-top: 1cm;
 
 }
+#description {
 
+    overflow: hidden;
+    resize: none;
+
+}
 .deletionForm{
     
     color: black;

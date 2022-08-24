@@ -13,18 +13,20 @@ ipcRenderer.on('editGroupWindow', (e, groupName) => {
 
             <form id="accountCreationForm">
                     
-                <h4>Editar el grupo '${groupName}'</h4>
+                <h4 id="groupName">Editar el grupo '${groupName}'</h4>
                 <br>
                 <br>
                 <h5>descripcion</h5>
-                <input type="text" id="description" placeholder="descripcion del grupo" required="true" value="${groupToEdit.groupDescription}">
+                <textarea id="description" cols="30">${groupToEdit.groupDescription}</textarea>
+                <br>
+                <br>                
+                <input type="password" id="password" value="" required="true" placeholder="contraseña">
                 <br>
                 <br>
-                <p class="card-text">contraseña del grupo</p>
-                <input type="password" id="password" value="" required="true">
+                <input type="password" id="passwordConfirmation" value="" required="true" placeholder="confirme la contraseña">
                 <br>
                 <br>
-                <button type="submit" class="btn btn-dark" id="groupCreationFormSubmitBtn">Editar Grupo</button>
+                <button type="submit" class="btn btn-dark" id="groupEditionFormSubmitBtn" onclick="editGroupEvent()">Editar Grupo</button>
 
             </form>
 
@@ -35,3 +37,37 @@ ipcRenderer.on('editGroupWindow', (e, groupName) => {
     body.innerHTML += formTemplate;
 
 })
+
+function reloadTextArea() {
+    
+    textArea = document.getElementById('description');
+
+    textArea.style.height = `${textArea.scrollHeight}px`
+
+}
+
+function editGroupEvent() {
+    
+    var groupName = document.getElementById('groupName').textContent;
+    var groupDescription = document.getElementById('description');
+    var groupPassword = document.getElementById('password');
+
+    const groupToEdit = JSON.parse(localStorage.getItem(groupName))
+    const realPassword = groupToEdit.groupPassword
+    if (groupPassword === realPassword) {
+        
+        const groupToEdit = {
+
+            groupName,
+            groupDescription,
+            groupPassword
+
+        }
+        localStorage.setItem(groupToEdit.groupName, JSON.stringify(groupToEdit))
+        ipcRenderer.send('editGroupEvent',)
+
+    }
+
+}
+
+setInterval(reloadTextArea, 500);

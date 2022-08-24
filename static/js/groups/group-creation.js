@@ -2,6 +2,14 @@ const { ipcRenderer } = require('electron');
 
 const form = document.getElementById('accountCreationForm');
 
+function reloadTextArea() {
+    
+    textArea = document.getElementById('description');
+
+    textArea.style.height = `${textArea.scrollHeight}px`
+
+}
+
 form.addEventListener('submit', (e) => {
 
     var groupName = document.getElementById('name').value;
@@ -19,3 +27,5 @@ form.addEventListener('submit', (e) => {
     ipcRenderer.send('newGroupEvent', newGroup);
 
 })
+
+setInterval(reloadTextArea, 500);
