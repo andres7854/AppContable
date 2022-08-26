@@ -39,7 +39,5 @@ form.addEventListener('submit', (e) => {
         ipcRenderer.send('incorrectDelete', deletionStatus)
 
     }
- 
-    e.preventDefault
 
 })

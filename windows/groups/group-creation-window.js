@@ -1,6 +1,6 @@
 // REQUERIMENTO DE MODULOS DE NODE.JS
 
-const { BrowserWindow, Menu, ipcMain } = require('electron');
+const { BrowserWindow, Menu, ipcMain, Notification } = require('electron');
 
 
 //DECLARACION E INICIO DE FUNCION CREACION DE VENTANA DE NUEVO GRUPO
@@ -48,7 +48,20 @@ ipcMain.on('groupCreationWindow', (e) => {
 
 ipcMain.on('newGroupEvent', (e) => {
 
+    const NOTIFICATION_TITLE = 'CREACION CORRECTA';
+    const NOTIFICATION_BODY = 'el grupo ha sido creado exitosamente';
+    new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY}).show();
     newGroupWindow.close();
+    
+})
+
+//DETECCION DE EVENTOS NOTIFICACIONES
+
+ipcMain.on('incorrectGroupCreation', (e) => {
+
+    const NOTIFICATION_TITLE = 'CREACION INCORRECTA';
+    const NOTIFICATION_BODY = 'las contraseñas introducidas no coinciden';
+    new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY}).show();
     
 })
 

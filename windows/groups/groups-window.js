@@ -33,15 +33,17 @@ function groupsWindowF() {
 
 //DETECCION DE EVENTOS CREAR GRUPO
 
-const saveGroupInLocalStorage = (newGroup) => {
-
-    localStorage.setItem(newGroup.name, JSON.stringify(newGroup))       
-
-}
-
 ipcMain.on('newGroupEvent', (e, newGroup) => {
 
     groupsWindow.webContents.send('newGroupEvent', newGroup);
+
+})
+
+//DETECCION DE EVENTOS CREAR GRUPO
+
+ipcMain.on('editGroupEvent', (e, newGroupEdited) => {
+
+    groupsWindow.webContents.send('editGroupEvent', newGroupEdited);
 
 })
 

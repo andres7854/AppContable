@@ -1,6 +1,6 @@
 // REQUERIMENTO DE MODULOS DE NODE.JS
 
-const { BrowserWindow, Menu, ipcMain, ipcRenderer } = require('electron');
+const { BrowserWindow, Menu, ipcMain, ipcRenderer, Notification } = require('electron');
 
 
 //DECLARACION E INICIO DE FUNCION CREACION DE VENTANA DE NUEVO GRUPO
@@ -46,12 +46,20 @@ ipcMain.on('editGroupWindow', (e, groupName) => {
 })
 
 
-//DETECCION DE EVENTOS CIERRE DE VENTANA DE NUEVO GRUPO
+//DETECCION DE EVENTOS CIERRE DE VENTANA DE NUEVO GRUPO Y NOTIFICACIONES
 
-ipcMain.on('newGroupEvent', (e) => {
+ipcMain.on('editGroupEvent', (e) => {
 
     editGroupWindow.close();
     
+})
+
+ipcMain.on('incorrectEditGroup', (e) => {
+
+    const NOTIFICATION_TITLE = 'GRUPO NO EDITADO';
+    const NOTIFICATION_BODY = 'la contraseña introducida es incorrecta';
+    new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY}).show();
+
 })
 
 //TEMPLATE DE MENU PARA VENTANA DE LOS GRUPOS

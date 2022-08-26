@@ -29,6 +29,15 @@ const saveNewGroup = (newGroup) => {
 
 }
 
+//EDICION DE GRUPO YA EN EL LOCAL STORAGE
+
+const EditAGroup = (newGroupEdited) => {
+
+    console.log(newGroupEdited)
+    localStorage.setItem(newGroupEdited.groupName, JSON.stringify(newGroupEdited))
+
+}
+
 //OBTENCION DE LOS GRUPOS CREADOS EN EL LOCAL STORAGE
 
 
@@ -276,6 +285,21 @@ ipcRenderer.on('newGroupEvent', (e, newGroup) => {
 
         }
     }
+
+}) 
+
+//DETECCION DE EVENTOS EDITAR UN GRUPO
+
+ipcRenderer.on('editGroupEvent', (e, newGroupEdited) => {
+      
+    //edicion e insercion del grupo al local storage mediante la funciona ya creada
+    EditAGroup(newGroupEdited);
+
+    //eliminacion de los grupos ya renderizados en el DOM
+    clearDOM();
+
+    //renderezacion de los grupos
+    renderGroups();
 
 }) 
 

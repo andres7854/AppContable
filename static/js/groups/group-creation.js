@@ -15,16 +15,25 @@ form.addEventListener('submit', (e) => {
     var groupName = document.getElementById('name').value;
     var groupDescription = document.getElementById('description').value;
     var groupPassword = document.getElementById('password').value;
+    var groupPasswordCheck = document.getElementById('passwordCheck').value;
 
-    const newGroup = {
+    if (groupPassword === groupPasswordCheck) {
+        
+        const newGroup = {
 
-        groupName,
-        groupDescription,
-        groupPassword
+            groupName,
+            groupDescription,
+            groupPassword
+    
+        }
 
-    }
+        ipcRenderer.send('newGroupEvent', newGroup);
 
-    ipcRenderer.send('newGroupEvent', newGroup);
+    }else{
+
+        ipcRenderer.send('incorrectGroupCreation')
+
+    } 
 
 })
 
