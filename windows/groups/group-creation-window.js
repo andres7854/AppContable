@@ -1,6 +1,7 @@
 // REQUERIMENTO DE MODULOS DE NODE.JS
 
 const { BrowserWindow, Menu, ipcMain, Notification } = require('electron');
+const isDev = require("electron-is-dev");
 
 
 //DECLARACION E INICIO DE FUNCION CREACION DE VENTANA DE NUEVO GRUPO
@@ -24,9 +25,18 @@ function newGroupWindowF() {
 
     });
 
-    const mainMenu = Menu.buildFromTemplate(templateMenu);
-    Menu.setApplicationMenu(mainMenu);
-    newGroupWindow.loadFile('../src/views/groups/new-group.html');
+    if (isDev) {
+    
+        const mainMenu = Menu.buildFromTemplate(templateMenu);
+        Menu.setApplicationMenu(mainMenu);
+
+    }else{
+
+        newGroupWindow.setMenu(null);
+
+    }
+
+    newGroupWindow.loadFile('./src/views/groups/new-group.html');
 
     newGroupWindow.on('closed', () => {
         newGroupWindow = null;

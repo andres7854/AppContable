@@ -1,6 +1,7 @@
-//IMPORTACION DE FUNCIONES DE ARCHIVOS EXTERNOS
+//IMPORTACION DE MODULOS DE NODE
 
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const isDev = require("electron-is-dev");
 
 
 //FUNCION DE CREACION PARA VENTANA DE LOS GRUPOS
@@ -20,10 +21,18 @@ function groupsWindowF() {
         }
 
     });
-    groupsWindow.loadFile('../src/views/groups/groups.html');
+    groupsWindow.loadFile('./src/views/groups/groups.html');
 
-    const mainMenu = Menu.buildFromTemplate(templateMenu);
-    Menu.setApplicationMenu(mainMenu);
+    if (isDev) {
+    
+        const mainMenu = Menu.buildFromTemplate(templateMenu);
+        Menu.setApplicationMenu(mainMenu);
+
+    }else{
+
+        groupsWindow.setMenu(null);
+
+    }
 
     groupsWindow.on('closed', () => {
         app.quit();

@@ -12,17 +12,14 @@ const groupsEditWindow = require('./windows/groups/group-edit-window');
 
 const { app, BrowserWindow, Menu, autoUpdater, ipcMain, ipcRenderer } = require('electron');
 
-const Store = require('electron-store');
+const isDev = require("electron-is-dev");
 
-const url = require('url');
 const path = require('path');
-const { electron } = require('process');
-const { Console } = require('console');
 
 
 //CONDICIONAL DE RECARGA AUTOMATICA EN CASO DE ESTAR EN AMBIENTE DE PRODUCCION
 
-if (process.env.NODE_ENV !== 'production') {
+if (isDev) {
 
     require('electron-reload')(__dirname, {
         electron: path.join(__dirname, '../node_modules', '.bin', 'electron')

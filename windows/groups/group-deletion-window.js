@@ -1,6 +1,8 @@
 //REQUERIMIENTO DE MODULOS DE NODE.JS
 
 const { ipcMain, BrowserWindow, Menu, Notification, ipcRenderer } = require('electron');
+const isDev = require("electron-is-dev");
+
 
 //DECLARACION E INICIO DE FUNCION CREACION DE VENTANA PARA BORRAR GRUPOS
 
@@ -20,9 +22,18 @@ function groupDeletingWindowF() {
 
     })
 
-    const mainMenu = Menu.buildFromTemplate(templateMenu);
-    Menu.setApplicationMenu(mainMenu);
-    groupDeletingWindow.loadFile('../src/views/groups/delete-group.html')
+    if (isDev) {
+    
+        const mainMenu = Menu.buildFromTemplate(templateMenu);
+        Menu.setApplicationMenu(mainMenu);
+
+    }else{
+
+        groupDeletingWindow.setMenu(null);
+
+    }
+
+    groupDeletingWindow.loadFile('./src/views/groups/delete-group.html')
 
 }
 

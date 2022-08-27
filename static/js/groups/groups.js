@@ -117,7 +117,6 @@ function createGroupElement(group) {
                     </div>
                 </div>
 
-
             </div>
             
 
@@ -178,16 +177,16 @@ function createGroupElement(group) {
 
             
             <div class="row-xs-4 p-2">
-                    
+
                 <div class="card" style="width: 25vw;">
                     <div class="card-body">
-                        
+
                         <h5 class="card-title">${group.groupName}</h5>
                         
                         <p class="card-text">${group.groupDescription}</p>
                         
-                        <button type="button" class="btn btn-success">Abrir</button>
-                        <button type="button" class="btn btn-success">Editar</button>
+                        <button type="button" class="btn btn-success" id="${currentNumberOfGroup}">Abrir</button>
+                        <button type="button" class="btn btn-success" onclick="editGroup(groupNameToEdit = '${group.groupName}')">Editar</button>
 
                     </div>
                 </div>
