@@ -3,6 +3,10 @@
 const { ipcRenderer } = require('electron'); 
 const { default: Swal } = require('sweetalert2');
 
+//DECLARACION DE VARIABLES DEL GRUPO
+
+var openGroup;
+
 //DECLARACION DE LOS BOTONES PARA CREACION DE OBJETOS (nominas, asientos contables, etc...)
 
 const createPayRollBtn = document.getElementById('createPayRollBtn');
@@ -14,14 +18,12 @@ ipcRenderer.on('openGroup', (e, groupName) => {
     const windowTittle = document.getElementById('tittleOfWindowText');
     windowTittle.textContent = groupName;
 
-    var openGroup = JSON.parse(localStorage.getItem(groupName));
+    openGroup = JSON.parse(localStorage.getItem(groupName));
 
     const windowDescription = document.getElementById('descriptionOfWindow');
 
     windowDescription.textContent = openGroup.groupDescription;
-
-    renderObjects(openGroup)
-    
+  
 })
 
 //FUNCION DE CREACION DE NOMINA
@@ -101,31 +103,38 @@ const getAllLocalStorageKeys = () => {
 
 }
 
-const renderOpenGroup = (objectToRender, openGroup) => {
+function renderOpenGroup(e, objectToRender){
 
-    if (objectToRender.objectOfGroup === openGroup.groupName) {
+    if (objectToRender.objectOfGroup === e.groupName) {
 
-        const objectTemplate = `
+        var objectTemplate;
+
+        if (e.type == "payRoll") {
+
+            objectTemplate = `
         
-        <div class="col">
-            
-            <div class="card";">
-                <div class="card-body">
+                <div class="col">
                     
-                    <h5 class="card-title">${openGroup.nameOfObject}</h5>
-                    
-                    <p class="card-text">${openGroup.descriptionOfObject}</p>
-                    
+                    <div class="card";">
+                        <div class="card-body">
+                            
+                            <h3 class="card-title">Nomina</h3>
+
+                            <h5 class="card-title">${e.nameOfObject}</h5>
+                            
+                            <p class="card-text">${e.descriptionOfObject}</p>
+
+                        </div>
+                    </div>
 
                 </div>
-            </div>
 
-        </div>
+                <br>
+                <br>
 
-        <br>
-        <br>
+            `
 
-        `
+        }
 
         objectsContainer.innerHTML += objectTemplate;
 
@@ -133,9 +142,9 @@ const renderOpenGroup = (objectToRender, openGroup) => {
 
 }
 
-function renderObjects(openGroup) {
+function renderObjects() {
     
-    return getAllLocalStorageKeys().map(renderOpenGroup, openGroup).join('');
+    return getAllLocalStorageKeys().map(renderOpenGroup).join('');
 
 }
 
