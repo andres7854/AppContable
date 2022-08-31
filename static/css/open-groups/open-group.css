@@ -1,0 +1,15 @@
+body{
+
+    background: linear-gradient(to right, #2c643b, #24a120, #0f2710); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+#tittleOfWindow{
+
+    text-align: center;
+
+}
+#tittleOfWindowText{
+
+    color: rgb(176, 176, 176);
+
+}

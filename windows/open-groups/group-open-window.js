@@ -6,22 +6,24 @@ const isDev = require("electron-is-dev");
 
 //FUNCION DE CREACION PARA VENTANA DE LOS GRUPOS
 
-let groupsWindow
+let openGroupWindow
 
-function groupsWindowF() {
+function openGroupWindowF() {
 
-    groupsWindow = new BrowserWindow({
+    openGroupWindow = new BrowserWindow({
 
-        width: 1280,
-        height: 720,
-        title: "App Contable",
+        show: false,
+        maximized: true,
+        title: "Grupo",
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false,
+            contextIsolation: false
         }
 
     });
-    groupsWindow.loadFile('./src/views/groups/groups.html');
+    openGroupWindow.maximize();
+    openGroupWindow.show();
+    openGroupWindow.loadFile('./src/views/open-groups/open-group.html');
 
     if (isDev) {
     
@@ -30,37 +32,24 @@ function groupsWindowF() {
 
     }else{
 
-        groupsWindow.setMenu(null);
+        openGroupWindow.setMenu(null);
 
     }
 
-    groupsWindow.on('closed', () => {
-        app.quit();
+    openGroupWindow.on('closed', () => {
+        
+        openGroupWindow = null;
+
     });
 
 }
 
-//DETECCION DE EVENTOS CREAR GRUPO
+//DETECCION DE EVENTOS CREACION DE VENTANA GRUPO ABIERTO
 
-ipcMain.on('newGroupEvent', (e, newGroup) => {
+ipcMain.on('openGroupWindow', (e, groupName) => {
 
-    groupsWindow.webContents.send('newGroupEvent', newGroup);
-
-})
-
-//DETECCION DE EVENTOS EDITAR GRUPO
-
-ipcMain.on('editGroupEvent', (e, newGroupEdited) => {
-
-    groupsWindow.webContents.send('editGroupEvent', newGroupEdited);
-
-})
-
-//DETECCION DE EVENTOS BORRAR GRUPO
-
-ipcMain.on('groupDeletion', (e) => {
-
-    groupsWindow.webContents.send('groupDeletion');
+    openGroupWindowF();
+    openGroupWindow.webContents.send('openGroup', groupName);
 
 })
 
@@ -87,7 +76,7 @@ if(process.platform === 'darwin') {
 
 //CONDICIONAL EN CASO DE ESTAR EN AMBIENTE DE PRODUCCION
 
-if (process.env.NODE_ENV !== 'production') {
+if (isDev) {
 
     templateMenu.push({
         label: 'DevTools',
@@ -111,7 +100,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = {
 
-    groupsWindowF,
-    groupsWindow
+    openGroupWindowF,
+    openGroupWindow
 
 }
