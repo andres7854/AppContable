@@ -1,3 +1,8 @@
+body {
+
+    background: linear-gradient(to right, #519883, #1e8e85, #1a3879); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
 #tittleOfWindow {
 
     text-align: center;
@@ -27,4 +32,13 @@
     min-height: 20vh;
     text-align: center;
     
+}
+
+.card {
+
+    border-color: rgb(26, 24, 24);
+    border-style: outset;
+    border-width: 0.1cm;
+    border-radius: 5%;
+
 }

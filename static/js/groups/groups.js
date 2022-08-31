@@ -86,142 +86,155 @@ function clearDOM() {
 
 function createGroupElement(group) {
 
-    var groups = document.querySelectorAll(".card")
+    var type = group.type;
 
-    var numberOfGroups = groups.length;
+    if (type === 'group'){
+
+        var groups = document.querySelectorAll(".card")
+
+        var numberOfGroups = groups.length;
 
 
-    //condicional que determina el numero de columnas
+        //condicional que determina el numero de columnas
 
-    if (numberOfGroups < maxNumberOfRows) {
+        if (numberOfGroups < maxNumberOfRows) {
 
-        currentNumberOfGroup = currentNumberOfGroup+1;
+            currentNumberOfGroup = currentNumberOfGroup + 1;
 
-        const bodyOfScripts = document.getElementById('bodyOfScripts');
-       
-        const newGroupTemplate = `
+            const newGroupTemplate = `
 
             
-            <div class="row-xs-4 p-2">
-                    
-                <div class="card" style="width: 25vw;">
-                    <div class="card-body">
+                <div class="row-xs-4 p-2">
                         
-                        <h5 class="card-title">${group.groupName}</h5>
-                        
-                        <p class="card-text">${group.groupDescription}</p>
-                        
-                        <button type="button" class="btn btn-success" id="${currentNumberOfGroup}">Abrir</button>
-                        <button type="button" class="btn btn-success" onclick="editGroup(groupNameToEdit = '${group.groupName}')">Editar</button>
+                    <div class="card" style="width: 25vw;">
+                        <div class="card-body">
+                            
+                            <h5 class="card-title">${group.groupName}</h5>
+                            
+                            <p class="card-text">${group.groupDescription}</p>
+                            
+                            <button type="button" class="btn btn-success" onclick="openGroup(groupNameToOpen = '${group.groupName}')">Abrir</button>
+                            <button type="button" class="btn btn-success" onclick="editGroup(groupNameToEdit = '${group.groupName}')">Editar</button>
 
+                        </div>
                     </div>
+
+                </div>
+            
+
+            `;
+
+            //console.log(currentNumberOfGroup)
+
+
+            //condicional para la obtencion del div en el que se insertara el nuevo grupo
+
+            if ((currentNumberOfGroup % 3) == 0) {
+
+                containerToWrite = document.getElementById(`${currentNumberOfGroup}`);
+                //console.log('soy multiplo de 3')
+
+            } else {
+
+                //console.log('no soy multiplo de 3')
+
+            }
+
+
+            //renderizacion del nuevo grupo en el DOM
+
+            containerToWrite.innerHTML += newGroupTemplate;
+
+        } else {
+
+
+            //insercion de un nuevo contenedor en caso de llegar al maximo de filas 
+
+            currentNumberOfGroup = currentNumberOfGroup + 1;
+
+            maxNumberOfRows = maxNumberOfRows + 3;
+
+            var maxNumberOfRowsId = maxNumberOfRows.toString();
+
+            const body = document.getElementById('bodyToModify');
+
+            const newDivTemplate = `
+        
+                <div class="container px-4" id="${maxNumberOfRowsId}">
+                    
+
+
                 </div>
 
-            </div>
-            
+            `;  
 
-        `;
+            //renderizacion del nuevo contenedor
 
-        //console.log(currentNumberOfGroup)
+            body.innerHTML += newDivTemplate;
 
 
-        //condicional para la obtencion del div en el que se insertara el nuevo grupo
+            //insercion del nuevo grupo en el contenedor creado
 
-        if ((currentNumberOfGroup % 3) == 0) {
+            const newGroupTemplate = `
 
-            containerToWrite = document.getElementById(`${currentNumberOfGroup}`);
-            //console.log('soy multiplo de 3')
+                <div class="row-xs-4 p-2">
 
-        }else{
+                    <div class="card" style="width: 25vw;">
+                        <div class="card-body">
 
-            //console.log('no soy multiplo de 3')
+                            <h5 class="card-title">${group.groupName}</h5>
+                            
+                            <p class="card-text">${group.groupDescription}</p>
+                            
+                            <button type="button" class="btn btn-success" onclick="openGroup(groupNameToOpen = '${group.groupName}')>Abrir</button>
+                            <button type="button" class="btn btn-success" onclick="editGroup(groupNameToEdit = '${group.groupName}')">Editar</button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            `;
+
+
+            //renderizacion del nuevo grupo creado
+
+            containerToWrite = document.getElementById(`${maxNumberOfRowsId}`);
+
+            containerToWrite.innerHTML += newGroupTemplate
+
 
         }
 
 
-        //renderizacion del nuevo grupo en el DOM
+        //RESTABLECIMIENTO DE VARIABLES PARA PODER VOLVER A RENDERIZAR
 
-        containerToWrite.innerHTML += newGroupTemplate;
+        var keys = Object.keys(localStorage);
+        var keysLength = keys.length;
 
-    }else{
+        if (numberOfGroups == keysLength) {
 
+            containerToWrite = document.getElementById('3');
+            currentNumberOfGroup = 0;
 
-        //insercion de un nuevo contenedor en caso de llegar al maximo de filas 
-
-        currentNumberOfGroup = currentNumberOfGroup+1;
-
-        maxNumberOfRows = maxNumberOfRows+3;
-
-        var maxNumberOfRowsId = maxNumberOfRows.toString();
-
-        const body = document.getElementById('bodyToModify');
-
-        const newDivTemplate = `
-        
-            <div class="container px-4" id="${maxNumberOfRowsId}">
-                
-
-
-            </div> 
-
-        `;
-
-        //renderizacion del nuevo contenedor
-
-        body.innerHTML += newDivTemplate;        
-
-
-        //insercion del nuevo grupo en el contenedor creado
-
-        const newGroupTemplate = `
-
-            
-            <div class="row-xs-4 p-2">
-
-                <div class="card" style="width: 25vw;">
-                    <div class="card-body">
-
-                        <h5 class="card-title">${group.groupName}</h5>
-                        
-                        <p class="card-text">${group.groupDescription}</p>
-                        
-                        <button type="button" class="btn btn-success" id="${currentNumberOfGroup}">Abrir</button>
-                        <button type="button" class="btn btn-success" onclick="editGroup(groupNameToEdit = '${group.groupName}')">Editar</button>
-
-                    </div>
-                </div>
-
-            </div>
-
-        `;
-
-
-        //renderizacion del nuevo grupo creado
-
-        containerToWrite = document.getElementById(`${maxNumberOfRowsId}`);
-
-        containerToWrite.innerHTML += newGroupTemplate
-        
-
-    }
-
-
-    //RESTABLECIMIENTO DE VARIABLES PARA PODER VOLVER A RENDERIZAR
-
-    var keys = Object.keys(localStorage);
-    var keysLength = keys.length;
-
-    if (numberOfGroups == keysLength) {
-        
-        containerToWrite = document.getElementById('3');
-        currentNumberOfGroup = 0;
+        }
 
     }
 
 }
 
+//FUNCION DE CREACION DE VENTANA DE GRUPOS
+
+function openGroup(groupNameToOpen) {
+
+    var groupName = groupNameToOpen;
+    
+    ipcRenderer.send('openGroupWindow', groupName);
+
+}
 
 //FUNCION DE CREACION DE VENTANA DE EDICION DE GRUPOS
+
 function editGroup(groupNameToEdit) {
 
     var groupName = groupNameToEdit;

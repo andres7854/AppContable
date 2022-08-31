@@ -8,6 +8,8 @@ const groupsDeletionWindow = require('./windows/groups/group-deletion-window');
 
 const groupsEditWindow = require('./windows/groups/group-edit-window');
 
+const openGroupWindow = require('./windows/open-groups/group-open-window');
+
 // REQUERIMENTO DE MODULOS DE NODE.JS
 
 const { app, BrowserWindow, Menu, autoUpdater, ipcMain, ipcRenderer } = require('electron');
@@ -21,9 +23,7 @@ const path = require('path');
 
 if (isDev) {
 
-    require('electron-reload')(__dirname, {
-        electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
-    })
+    require('electron-reload')(__dirname);
 
 }
 
