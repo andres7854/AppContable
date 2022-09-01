@@ -3,17 +3,19 @@
 const { ipcRenderer } = require('electron'); 
 const { default: Swal } = require('sweetalert2');
 
-//DECLARACION DE VARIABLES DEL GRUPO
+//DECLARACION DE VARIABLE DEL GRUPO ABIERTO Y CONTENEDOR DE LOS OBJETOS
 
-var openGroup;
+let openGroup;
+
+const objectsContainer = document.querySelector('#objectsContainer');
 
 //DECLARACION DE LOS BOTONES PARA CREACION DE OBJETOS (nominas, asientos contables, etc...)
 
 const createPayRollBtn = document.getElementById('createPayRollBtn');
 
-//INSERCION DE DATOS DEL GRUPO EN EL DOM
+//INSERCION DE DATOS DEL GRUPO EN EL DOM Y DECLARACION DEL GRUPO ABIERTO
 
-ipcRenderer.on('openGroup', (e, groupName) => {
+ipcRenderer.on('openGroup', async (e, groupName) => {
 
     const windowTittle = document.getElementById('tittleOfWindowText');
     windowTittle.textContent = groupName;
@@ -21,10 +23,19 @@ ipcRenderer.on('openGroup', (e, groupName) => {
     openGroup = JSON.parse(localStorage.getItem(groupName));
 
     const windowDescription = document.getElementById('descriptionOfWindow');
-
     windowDescription.textContent = openGroup.groupDescription;
+
+    renderObjects();
   
 })
+
+//FUNCION PARA LIAMPIAR EL DOOM PARA NUEVAS RENDERIZACIONES
+
+function clearDoom() {
+    
+    objectsContainer.innerHTML = ''; 
+
+}
 
 //FUNCION DE CREACION DE NOMINA
 
@@ -78,6 +89,8 @@ createPayRollBtn.addEventListener('click', (e)=> {
 
                             newPayRoll.descriptionOfObject = payRollDescription;
                             localStorage.setItem(payRollName, JSON.stringify(newPayRoll));
+                            clearDoom();
+                            renderObjects();
 
                         }
                         
@@ -95,21 +108,19 @@ createPayRollBtn.addEventListener('click', (e)=> {
 
 //FUNCION DE RENDERIZACION DE GRUPOS
 
-const objectsContainer = document.querySelector('#objectsContainer');
-
-const getAllLocalStorageKeys = () => {
+function getAllLocalStorageKeys(){
 
     return Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)))
 
 }
 
-function renderOpenGroup(e, objectToRender){
+function renderOpenGroup(objectToRender){
 
-    if (objectToRender.objectOfGroup === e.groupName) {
+    if (objectToRender.objectOfGroup === openGroup.groupName) {
 
         var objectTemplate;
 
-        if (e.type == "payRoll") {
+        if (objectToRender.type == "payRoll") {
 
             objectTemplate = `
         
@@ -120,9 +131,9 @@ function renderOpenGroup(e, objectToRender){
                             
                             <h3 class="card-title">Nomina</h3>
 
-                            <h5 class="card-title">${e.nameOfObject}</h5>
+                            <h5 class="card-title">${objectToRender.nameOfObject}</h5>
                             
-                            <p class="card-text">${e.descriptionOfObject}</p>
+                            <p class="card-text">${objectToRender.descriptionOfObject}</p>
 
                         </div>
                     </div>
@@ -147,6 +158,4 @@ function renderObjects() {
     return getAllLocalStorageKeys().map(renderOpenGroup).join('');
 
 }
-
-renderObjects();
 
