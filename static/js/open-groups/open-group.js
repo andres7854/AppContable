@@ -124,21 +124,27 @@ function renderOpenGroup(objectToRender){
 
             objectTemplate = `
         
-                <div class="col">
+            <div class="col">
                     
-                    <div class="card";">
-                        <div class="card-body">
-                            
-                            <h3 class="card-title">Nomina</h3>
+                <div class="card">
 
-                            <h5 class="card-title">${objectToRender.nameOfObject}</h5>
-                            
-                            <p class="card-text">${objectToRender.descriptionOfObject}</p>
+                    <div class="card-body text-center">
+                        
+                        <h3 class="card-title">Nomina</h3>
 
-                        </div>
+                        <h5 class="card-title">${objectToRender.nameOfObject}</h5>
+                        
+                        <p class="card-text">${objectToRender.descriptionOfObject}</p>
+
+                        <button type="button" class="btn btn-danger" onclick="editGroup(groupNameToEdit = '')" id="editBtn">Editar</button>
+                        <button type="button" class="btn btn-success" onclick="openGroup(groupNameToOpen = '')" id="openBtn">Abrir</button>
+                        <button type="button" class="btn btn-danger" onclick="editGroup(groupNameToEdit = '')" id="deleteBtn">Borrar</button>
+
                     </div>
 
                 </div>
+
+            </div>
 
                 <br>
                 <br>

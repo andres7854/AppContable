@@ -13,3 +13,24 @@ body{
     color: rgb(176, 176, 176);
 
 }
+.card {
+
+    border-color: rgb(26, 24, 24);
+    border-style: outset;
+    border-width: 0.1cm;
+
+}
+#editBtn{
+
+    position: absolute;
+    left: 10%;
+    top: 40%;
+
+}
+#deleteBtn{
+
+    position: absolute;
+    right: 10%;
+    top: 40%;
+
+}
