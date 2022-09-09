@@ -281,7 +281,7 @@ ipcRenderer.on('newGroupEvent', (e, newGroup) => {
         //condicional en caso de ya estar usado el nombre de grupo elegido
         if (key == newGroup.groupName) {
           
-            alert('este nombre de grupo ya ah sido usado')
+            alert('este nombre ya ah sido usado por algo mas')
             break
 
         }else if(currentKeyPosition == keysLength){

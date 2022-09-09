@@ -29,11 +29,55 @@ ipcRenderer.on('openGroup', async (e, groupName) => {
   
 })
 
-//FUNCION PARA LIAMPIAR EL DOOM PARA NUEVAS RENDERIZACIONES
+//FUNCION PARA LIMPIAR EL DOOM PARA NUEVAS RENDERIZACIONES
 
-function clearDoom() {
+function clearDOM() {
     
     objectsContainer.innerHTML = ''; 
+
+}
+
+//FUNCION PARA DETECTAR UN NUEVO ESTADO EN LOS OBJETOS
+
+function detectObjectsStatus(objectsStatus) {
+    
+    if (objectsStatus == 'objectCreated') {
+        
+        Swal.fire({
+
+            title: 'Objecto creado correctamente',
+            icon: 'success',
+            confirmButtonText: "ok",
+            allowEscapeKey: "false",
+            stopKeydownPropagation: "true",
+    
+        })
+
+    }else if (objectsStatus == 'objectEdited') {
+        
+        Swal.fire({
+
+            title: 'Objecto editado correctamente',
+            icon: 'success',
+            confirmButtonText: "ok",
+            allowEscapeKey: "false",
+            stopKeydownPropagation: "true",
+    
+        })
+
+    }else if(objectsStatus == 'objectDeleted') {
+
+        Swal.fire({
+
+            title: 'Objecto eliminado correctamente',
+            icon: 'success',
+            confirmButtonText: "ok",
+            allowEscapeKey: "false",
+            stopKeydownPropagation: "true",
+    
+        })
+
+    }
 
 }
 
@@ -67,37 +111,68 @@ createPayRollBtn.addEventListener('click', (e)=> {
                 newPayRoll.type = 'payRoll';
 
                 newPayRoll.nameOfObject = payRollName;
+
+                //establecimiento de variables para comprobar cuando se acaban de recorrer todos los objesto en el local storage
+                                
+                let keys = Object.keys(localStorage);
+                            
+                let currentKeyPosition = -1;                
                 
-                Swal.fire({
-
-                    title: 'Nueva nomina',
-                    text: 'elija la descripcion de la nueva nomina',
-                    icon: 'info',
-                    input: 'text',
-                    inputPlaceholder: "descripcion de la nomina",
-                    confirmButtonText: "crear nomina",
-                    showCancelButton: "true",
-                    cancelButtonText: "cancelar",
-                    cancelButtonColor: "red",
-                    allowEscapeKey: "false",
-                    stopKeydownPropagation: "true",
-                    inputValidator: payRollDescription => {
-
-                        if (!payRollDescription) {
-                            return "Por favor escribe la descripcion de la nomina";
-                        }else{
-
-                            newPayRoll.descriptionOfObject = payRollDescription;
-                            localStorage.setItem(payRollName, JSON.stringify(newPayRoll));
-                            clearDoom();
-                            renderObjects();
-
-                        }
+                //recorrido a traves de todos los objetos en el local storage
+                
+                for (i=0; i <= keys.length; i++) {                                  
+                
+                    //establecimiento de la pocion actual durante el recorrido
+                
+                    currentKeyPosition = currentKeyPosition+1;
+                
+                    var keysLength = keys.length;
                         
+                    var key = keys[i];
+                
+                    //condicional en caso de ya estar usado el nombre de grupo elegido
+                    if (key == newPayRoll.nameOfObject) {
+                          
+                        return('este nombre ya ah sido usado recuerda que no puedes usar los mismos nombres de grupos, nominas, asientos contables, etc.. para otros usos')
+                
+                    }else if(currentKeyPosition == keysLength){                        
+                
+                        Swal.fire({
+
+                            title: 'Nueva nomina',
+                            text: 'elija la descripcion de la nueva nomina',
+                            icon: 'info',
+                            input: 'text',
+                            inputPlaceholder: "descripcion de la nomina",
+                            confirmButtonText: "crear nomina",
+                            showCancelButton: "true",
+                            cancelButtonText: "cancelar",
+                            cancelButtonColor: "red",
+                            allowEscapeKey: "false",
+                            stopKeydownPropagation: "true",
+                            inputValidator: payRollDescription => {
+        
+                                if (!payRollDescription) {
+                                    return "Por favor escribe la descripcion de la nomina";
+                                }else{
+        
+                                    newPayRoll.descriptionOfObject = payRollDescription;
+                                    localStorage.setItem(payRollName, JSON.stringify(newPayRoll));
+                                    clearDOM();
+                                    renderObjects();
+
+                                    var objectsStatus = 'objectCreated';
+                                    detectObjectsStatus(objectsStatus);
+        
+                                }
+                            
+                            }
+        
+                        })
 
                     }
-
-                })
+                    
+                }                
                 
             }
         }
@@ -106,7 +181,140 @@ createPayRollBtn.addEventListener('click', (e)=> {
 
 })
 
-//FUNCION DE RENDERIZACION DE GRUPOS
+//FUNCION PARA ABRIR OBJETOS
+
+function openObject(params) {
+    
+}
+
+//FUNCION PARA EDITAR OBJETOS
+
+function editObject(objectSelectedName, objectType) {
+    
+    var objectSelected = JSON.parse(localStorage.getItem(objectSelectedName));
+
+    Swal.fire({
+
+        title: `Editar ${objectType}`,
+        text: `editar la descripcion de ${objectSelected.nameOfObject}`,
+        icon: 'warning',
+        input: 'text',
+        inputValue: `${objectSelected.descriptionOfObject}`,
+        inputPlaceholder: "descripcion",
+        confirmButtonText: "Siguiente",
+        showCancelButton: "true",
+        cancelButtonText: "cancelar",
+        cancelButtonColor: "red",
+        allowEscapeKey: "false",
+        stopKeydownPropagation: "true",
+        inputValidator: objectDescription => {
+            
+            let objectToEdit = {}
+
+            if (!objectDescription) {
+                return "Por favor escribe una descripcion";
+            } else {
+
+                var groupOfObjectSelected = JSON.parse(localStorage.getItem(objectSelected.objectOfGroup))
+
+                Swal.fire({
+
+                    title: `Editar ${objectType}`,
+                    text: `contraseña de ${objectSelected.nameOfObject}`,
+                    icon: 'warning',
+                    input: 'text',
+                    inputPlaceholder: `contraseña de ${objectType}`,
+                    confirmButtonText: "Editar",
+                    showCancelButton: "true",
+                    cancelButtonText: "cancelar",
+                    cancelButtonColor: "red",
+                    allowEscapeKey: "false",
+                    stopKeydownPropagation: "true",
+                    inputValidator: objectPassword => {  
+                        
+                        if (!objectPassword) {
+                            
+                            return 'Por favor escribe la contraseña';
+
+                        }else if (objectPassword == groupOfObjectSelected.groupPassword) {
+
+                            objectToEdit.objectOfGroup = openGroup.groupName;
+
+                            objectToEdit.type = objectSelected.type;
+
+                            objectToEdit.nameOfObject = objectSelected.nameOfObject;
+                            
+                            objectToEdit.descriptionOfObject = objectDescription;
+
+                            localStorage.setItem(objectSelected.nameOfObject, JSON.stringify(objectToEdit));
+                            clearDOM();
+                            renderObjects();
+
+                            var objectsStatus = 'objectEdited';
+                            detectObjectsStatus(objectsStatus);
+
+                        }else{
+
+                            return 'Contraseña incorrecta recuerde que la contraseña es la misma escogida anteriormente para el grupo';
+
+                        }
+
+                    }
+                
+                })
+                
+            }
+        }
+
+    })
+
+}
+
+//FUNCION PARA BORRAR OBJETOS
+
+function deleteObject(objectSelectedName, objectType){
+
+    var objectSelected = JSON.parse(localStorage.getItem(objectSelectedName))
+
+    var groupOfObjectSelected = JSON.parse(localStorage.getItem(objectSelected.objectOfGroup))
+
+    Swal.fire({
+
+        title: `Editar ${objectType}`,
+        text: `contraseña de ${objectSelected.nameOfObject}`,
+        icon: 'warning',
+        input: 'text',
+        inputPlaceholder: `contraseña de ${objectType}`,
+        confirmButtonText: "Eliminar",
+        showCancelButton: "true",
+        cancelButtonText: "cancelar",
+        cancelButtonColor: "red",
+        allowEscapeKey: "false",
+        stopKeydownPropagation: "true",
+        inputValidator: objectPassword => {
+
+            if (objectPassword == groupOfObjectSelected.groupPassword) {
+
+                localStorage.removeItem(objectSelectedName);
+                clearDOM();
+                renderObjects();
+
+                var objectsStatus = 'objectDeleted';
+                detectObjectsStatus(objectsStatus);
+
+            }else{
+
+                return 'Contraseña incorrecta recuerde que la contraseña es la misma escogida anteriormente para el grupo';
+
+            }
+
+        }
+
+    })
+
+}
+
+//FUNCION DE RENDERIZACION DE OBJETOS
 
 function getAllLocalStorageKeys(){
 
@@ -136,9 +344,9 @@ function renderOpenGroup(objectToRender){
                         
                         <p class="card-text">${objectToRender.descriptionOfObject}</p>
 
-                        <button type="button" class="btn btn-danger" onclick="editGroup(groupNameToEdit = '')" id="editBtn">Editar</button>
-                        <button type="button" class="btn btn-success" onclick="openGroup(groupNameToOpen = '')" id="openBtn">Abrir</button>
-                        <button type="button" class="btn btn-danger" onclick="editGroup(groupNameToEdit = '')" id="deleteBtn">Borrar</button>
+                        <button type="button" class="btn btn-danger" onclick="editObject(objectSelectedName = '${objectToRender.nameOfObject}', objectType = 'nomina')" id="editBtn">Editar</button>
+                        <button type="button" class="btn btn-success" onclick="openObject(objectSelectedName = '${objectToRender.nameOfObject}', objectType = 'nomina')" id="openBtn">Abrir</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteObject(objectSelectedName = '${objectToRender.nameOfObject}', objectType = 'nomina')" id="deleteBtn">Borrar</button>
 
                     </div>
 
