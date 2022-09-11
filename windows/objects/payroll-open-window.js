@@ -6,24 +6,24 @@ const isDev = require("electron-is-dev");
 
 //FUNCION DE CREACION PARA VENTANA DE LOS GRUPOS
 
-let openGroupWindow;
+let openPayrollWindow;
 
-async function openGroupWindowF() {
+async function openPayrollWindowF() {
 
-    openGroupWindow = new BrowserWindow({
+    openPayrollWindow = new BrowserWindow({
 
         show: false,
         maximized: true,
-        title: "Grupo",
+        title: "Objeto abierto",
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
         }
 
     });
-    openGroupWindow.maximize();
-    openGroupWindow.show();
-    await openGroupWindow.loadFile('./src/views/open-groups/open-group.html');
+    openPayrollWindow.maximize();
+    openPayrollWindow.show();
+    await openPayrollWindow.loadFile('./src/views/objects/open-payroll.html');
 
     if (isDev) {
     
@@ -32,24 +32,24 @@ async function openGroupWindowF() {
 
     }else{
 
-        openGroupWindow.setMenu(null);
+        openPayrollWindow.setMenu(null);
 
     }
 
-    openGroupWindow.on('closed', () => {
+    openPayrollWindow.on('closed', () => {
         
-        openGroupWindow = null;
+        openPayrollWindow = null;
 
     });
 
 }
 
-//DETECCION DE EVENTOS CREACION DE VENTANA GRUPO ABIERTO
+//DETECCION DE EVENTOS CREACION DE VENTANA DE NOMINA ABIERTA
 
-ipcMain.on('openGroupWindow', async (e, groupName) => {
+ipcMain.on('openPayroll', async (e, objectSelected) => {
 
-    await openGroupWindowF(); 
-    openGroupWindow.webContents.send('openGroup', groupName);
+    await openPayrollWindowF(); 
+    openPayrollWindow.webContents.send('openPayroll', objectSelected);
 
 })
 
@@ -100,7 +100,7 @@ if (isDev) {
 
 module.exports = {
 
-    openGroupWindowF,
-    openGroupWindow
+    openPayrollWindowF,
+    openPayrollWindow
 
 }

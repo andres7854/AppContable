@@ -1,0 +1,39 @@
+body{
+
+    /*background: linear-gradient(to right, #2c643b, #24a120, #0f2710); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+#tittleOfWindow{
+
+    text-align: center;
+
+}
+#tittleOfWindowText{
+
+    color: rgb(176, 176, 176);
+
+}
+.container{
+
+    min-width: 100vw;
+
+}
+th, td{
+    
+    border-color: rgb(26, 24, 24);
+    border-style: outset;
+    border-width: 0.1cm;
+
+}
+textarea {
+
+    border-color: transparent;
+    overflow: hidden;
+    resize: none;
+
+}
+.amounts{
+
+    border-color: black;
+
+}

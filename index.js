@@ -10,6 +10,8 @@ const groupsEditWindow = require('./windows/groups/group-edit-window');
 
 const openGroupWindow = require('./windows/open-groups/group-open-window');
 
+const openPayrollWindow = require('./windows/objects/payroll-open-window');
+
 // REQUERIMENTO DE MODULOS DE NODE.JS
 
 const { app, BrowserWindow, Menu, autoUpdater, ipcMain, ipcRenderer } = require('electron');

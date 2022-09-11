@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objeto abierto</title>
+
+    <!-- Css Bootstrap -->
+    <link rel="stylesheet" href="../../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.min.css">
+
+    <!--CUSTOM CSS-->
+    <link rel="stylesheet" href="../../static/css/objects/open-object.css">
+</head>
+<body>
+    
+    <div id="tittleOfWindow">
+
+        <h1 id="tittleOfWindowText"></h1>
+        <h2 id="descriptionOfWindow"></h2>
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+
+    <div class="container p-4 text-center">
+        <div class="row">
+
+            <div class="col">
+
+                <h6>dias que tivo que trabajar</h6>
+                <select name="" id="amountDays">
+
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>                    
+
+                </select>
+
+            </div>
+    
+            <div class="col">
+    
+                <h6>cantidad del auxilio de transporte</h6>
+                <textarea name="" id="amountTransAss" class="amounts" cols="30" rows="1" placeholder="cantidad de auxilio de transporte"></textarea>
+    
+            </div>
+    
+            <div class="col">
+    
+                <h6>porcentaje del aporte de eps</h6>
+                <textarea name="" id="amountEpsCon" class="amounts" cols="30" rows="1" placeholder="porcentaje del aporte de eps"></textarea>
+    
+            </div>
+    
+            <div class="col">
+    
+                <h6>porcentaje del aporte de pension</h6>
+                <textarea name="" id="amountPenCon" class="amounts" cols="30" rows="1" placeholder="porcentaje del aporte de pension"></textarea>
+    
+            </div>
+    
+        </div>
+    </div>
+
+    <div class="container">
+
+        <table>
+
+            <tr>
+    
+                <th>Nombre</th>
+                <th>Sueldo basico</th>
+                <th>Dias Trabajados</th>
+                <th>Sueldo laborado</th>
+                <th>Horas extra</th>
+                <th>Comisiones</th>
+                <th>Auxilio de transporte</th>
+                <th>Total devengado</th>
+                <th>Aporte eps 4%</th>
+                <th>Aporte pension 4%</th>
+                <th>Prestamo</th>
+                <th>Fondo solidario</th>
+                <th>Total deducido</th>
+                <th>Total a pagar</th>
+    
+            </tr>
+
+            <tr>
+
+                <td><textarea name="" id="name" cols="14" rows="2" placeholder="Nombre y apellidos"></textarea></td>
+
+                <td><textarea name="" id="minimunWage" cols="14" rows="2" placeholder="Sueldo basico">0</textarea></td>
+
+                <td><textarea name="" id="days" cols="14" rows="2" placeholder="Dias">0</textarea></td>
+
+                <td><textarea name="" id="salaryWorked" cols="14" rows="2" placeholder="Sueldo laborado">0</textarea></td>
+
+                <td><textarea name="" id="extraHours" cols="14" rows="2" placeholder="Horas extra">0</textarea></td>
+
+                <td><textarea name="" id="commissions" cols="14" rows="2" placeholder="Comisiones">0</textarea></td>
+
+                <td><textarea name="" id="transportAssist" cols="14" rows="2" placeholder="Auxilio de transporte">0</textarea></td>
+
+                <td><textarea name="" id="totalAccrued" cols="14" rows="2" placeholder="Total devengado">0</textarea></td>
+
+                <td><textarea name="" id="epsContribution" cols="14" rows="2" placeholder="Aporte eps"></textarea></td>
+
+                <td><textarea name="" id="pensionContribution" cols="14" rows="2" placeholder="Aporte pension"></textarea></td>
+
+                <td><textarea name="" id="lendLease" cols="14" rows="2" placeholder="Prestamo"></textarea></td>
+
+                <td><textarea name="" id="solidarityFund" cols="14" rows="2" placeholder="Fondo solidario"></textarea></td>
+
+                <td><textarea name="" id="totalDeducted" cols="14" rows="2" placeholder="Total deducido"></textarea></td>
+
+                <td><textarea name="" id="totalToPay" cols="14" rows="2" placeholder="Total a pagar"></textarea></td>                
+
+            </tr>
+            
+    
+        </table>
+
+    </div>
+
+
+    <!--LOGICA-->
+    <script src="../../static/js/objects/open-payrolls.js"></script>
+
+    <!--LOGICA DE BOOTSTRAP-->
+    
+
+
+</body>
+</html>

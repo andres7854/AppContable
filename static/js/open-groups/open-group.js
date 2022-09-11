@@ -157,6 +157,16 @@ createPayRollBtn.addEventListener('click', (e)=> {
                                 }else{
         
                                     newPayRoll.descriptionOfObject = payRollDescription;
+                                    newPayRoll.name = '';
+                                    newPayRoll.minimunWage = '0';
+                                    newPayRoll.days = '0';
+                                    newPayRoll.extraHours = '0';
+                                    newPayRoll.commissions = '0';
+                                    newPayRoll.lendLease = '0';   
+                                    newPayRoll.amountDays = '0';
+                                    newPayRoll.amountTransAss = '0';
+                                    newPayRoll.amountEpsCon = '0';
+                                    newPayRoll.amountPenCon  = '0';                                    
                                     localStorage.setItem(payRollName, JSON.stringify(newPayRoll));
                                     clearDOM();
                                     renderObjects();
@@ -183,8 +193,50 @@ createPayRollBtn.addEventListener('click', (e)=> {
 
 //FUNCION PARA ABRIR OBJETOS
 
-function openObject(params) {
+function openObject(objectSelectedName, objectType) {
     
+    var objectSelected = JSON.parse(localStorage.getItem(objectSelectedName));
+
+    var groupOfObjectSelected = JSON.parse(localStorage.getItem(objectSelected.objectOfGroup));
+
+    Swal.fire({
+
+        title: `Abrir ${objectType}`,
+        icon: 'warning',
+        input: 'text',
+        inputValue: ``,
+        inputPlaceholder: "contraseña",
+        confirmButtonText: "Abrir",
+        showCancelButton: "true",
+        cancelButtonText: "Cancelar",
+        cancelButtonColor: "red",
+        allowEscapeKey: "false",
+        stopKeydownPropagation: "true",
+        inputValidator: objectPassword => {
+
+            if (!objectPassword) {
+
+                return 'por favor escribe la contraseña';
+
+            }else if (objectPassword == groupOfObjectSelected.groupPassword) {
+                
+                if (objectSelected.type == 'payRoll') {
+                
+                    ipcRenderer.send('openPayroll', objectSelected);
+
+                }
+                
+
+            }else{
+
+                return 'Contraseña incorrecta recuerde que la contraseña es la misma escogida anteriormente para el grupo';
+
+            }
+
+        }
+
+    })
+
 }
 
 //FUNCION PARA EDITAR OBJETOS
@@ -293,7 +345,12 @@ function deleteObject(objectSelectedName, objectType){
         stopKeydownPropagation: "true",
         inputValidator: objectPassword => {
 
-            if (objectPassword == groupOfObjectSelected.groupPassword) {
+            if (!objectPassword){
+
+                return 'por favor escribe la contraseña';
+
+            }
+            else if(objectPassword == groupOfObjectSelected.groupPassword) {
 
                 localStorage.removeItem(objectSelectedName);
                 clearDOM();
