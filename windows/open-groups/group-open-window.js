@@ -6,9 +6,11 @@ const isDev = require("electron-is-dev");
 
 //FUNCION DE CREACION PARA VENTANA DE LOS GRUPOS
 
-let openGroupWindow
+let openGroupWindow;
 
-function openGroupWindowF() {
+let openGroupName;
+
+async function openGroupWindowF() {
 
     openGroupWindow = new BrowserWindow({
 
@@ -23,7 +25,7 @@ function openGroupWindowF() {
     });
     openGroupWindow.maximize();
     openGroupWindow.show();
-    openGroupWindow.loadFile('./src/views/open-groups/open-group.html');
+    await openGroupWindow.loadFile('./src/views/open-groups/open-group.html');
 
     if (isDev) {
     
@@ -46,9 +48,9 @@ function openGroupWindowF() {
 
 //DETECCION DE EVENTOS CREACION DE VENTANA GRUPO ABIERTO
 
-ipcMain.on('openGroupWindow', (e, groupName) => {
+ipcMain.on('openGroupWindow', async (e, groupName) => {
 
-    openGroupWindowF();
+    await openGroupWindowF(); 
     openGroupWindow.webContents.send('openGroup', groupName);
 
 })
