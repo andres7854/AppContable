@@ -1,6 +1,8 @@
 //REQUERIMIENTO DE MODULOS DE NODE.JS
 
 const { ipcMain, BrowserWindow, Menu, Notification, ipcRenderer } = require('electron');
+const isDev = require("electron-is-dev");
+
 
 //DECLARACION E INICIO DE FUNCION CREACION DE VENTANA PARA BORRAR GRUPOS
 
@@ -20,9 +22,18 @@ function groupDeletingWindowF() {
 
     })
 
-    const mainMenu = Menu.buildFromTemplate(templateMenu);
-    Menu.setApplicationMenu(mainMenu);
-    groupDeletingWindow.loadFile('../src/views/groups/delete-group.html')
+    if (isDev) {
+    
+        const mainMenu = Menu.buildFromTemplate(templateMenu);
+        Menu.setApplicationMenu(mainMenu);
+
+    }else{
+
+        groupDeletingWindow.setMenu(null);
+
+    }
+
+    groupDeletingWindow.loadFile('./src/views/groups/delete-group.html')
 
 }
 
@@ -48,7 +59,7 @@ ipcMain.on('incorrectDelete', (e, deletionStatus) => {
     }else if(deletionStatus === `name of group don't encountered`){
 
         const NOTIFICATION_TITLE = 'ELIMINACION INCORRECTA';
-        const NOTIFICATION_BODY = 'el nombre de grupo no ah sido encontrado';
+        const NOTIFICATION_BODY = 'el nombre de grupo no ha sido encontrado';
         new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY}).show();
 
     }else if(deletionStatus === 'the pasword is incorrect'){
@@ -68,8 +79,6 @@ ipcMain.on('groupDeletion', (e) => {
     const NOTIFICATION_TITLE = 'ELIMINACION CORRECTA';
     const NOTIFICATION_BODY = 'grupo borrado exitosamente';
     new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY}).show();
-
-    groupDeletingWindow.webContents.send('groupDeletion');
 
     groupDeletingWindow.close()
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar un grupo</title>
+    
+    <!-- Css Bootstrap -->
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/bootstrap/bootstrap.min.css">
+
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="../../static/css/groups/group-creation-deletion.css">
+
+</head>
+
+<body>
+    
+
+    <div class="creationForm">
+
+        <form id="accountCreationForm">
+                
+            <h4 id="groupName"></h4>
+            <br>
+            <br>
+            <h5>descripcion</h5>
+            <textarea id="description" cols="30"></textarea>
+            <br>
+            <br>                
+            <input type="password" id="password" value="" required="true" placeholder="contraseña">
+            <br>
+            <br>
+            <button type="submit" class="btn btn-dark" id="groupEditionFormSubmitBtn" onclick="editGroupEvent(event)">Editar Grupo</button>
+
+        </form>
+
+    </div>
+    
+    
+</body>
+
+<script src="../../static/js/groups/group-edition.js"></script>
+
+</html>

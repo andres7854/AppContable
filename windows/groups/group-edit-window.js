@@ -1,23 +1,23 @@
 // REQUERIMENTO DE MODULOS DE NODE.JS
 
-const { BrowserWindow, Menu, ipcMain, Notification } = require('electron');
+const { BrowserWindow, Menu, ipcMain, ipcRenderer, Notification } = require('electron');
 const isDev = require("electron-is-dev");
 
 
 //DECLARACION E INICIO DE FUNCION CREACION DE VENTANA DE NUEVO GRUPO
 
-let newGroupWindow
+let editGroupWindow
 
 
 //FUNCION PARA CREACION DE LA VENTANA
 
-function newGroupWindowF() {
+function editGroupWindowF() {
 
-    newGroupWindow = new BrowserWindow({
+    editGroupWindow = new BrowserWindow({
 
         width: 800,
         height: 600,
-        title: "Añadir un grupo nuevo",
+        title: "Editar un grupo",
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -32,14 +32,13 @@ function newGroupWindowF() {
 
     }else{
 
-        newGroupWindow.setMenu(null);
+        editGroupWindow.setMenu(null);
 
     }
+    editGroupWindow.loadFile('./src/views/groups/edit-group.html');
 
-    newGroupWindow.loadFile('./src/views/groups/new-group.html');
-
-    newGroupWindow.on('closed', () => {
-        newGroupWindow = null;
+    editGroupWindow.on('closed', () => {
+        editGroupWindow = null;
     });
 
 }
@@ -47,32 +46,29 @@ function newGroupWindowF() {
 
 //DETECCION DE EVENTOS CREACION DE VENTANA DE NUEVO GRUPO
 
-ipcMain.on('groupCreationWindow', (e) => {
+ipcMain.on('editGroupWindow', (e, groupName) => {
 
-    newGroupWindowF();
+    editGroupWindowF();
+
+    editGroupWindow.webContents.send('editGroupWindow', groupName);
 
 })
 
 
-//DETECCION DE EVENTOS CIERRE DE VENTANA DE NUEVO GRUPO
+//DETECCION DE EVENTOS CIERRE DE VENTANA DE NUEVO GRUPO Y NOTIFICACIONES
 
-ipcMain.on('newGroupEvent', (e) => {
+ipcMain.on('editGroupEvent', (e) => {
 
-    const NOTIFICATION_TITLE = 'CREACION CORRECTA';
-    const NOTIFICATION_BODY = 'el grupo ha sido creado exitosamente';
-    new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY}).show();
-    newGroupWindow.close();
+    editGroupWindow.close();
     
 })
 
-//DETECCION DE EVENTOS NOTIFICACIONES
+ipcMain.on('incorrectEditGroup', (e) => {
 
-ipcMain.on('incorrectGroupCreation', (e) => {
-
-    const NOTIFICATION_TITLE = 'CREACION INCORRECTA';
-    const NOTIFICATION_BODY = 'las contraseñas introducidas no coinciden';
+    const NOTIFICATION_TITLE = 'GRUPO NO EDITADO';
+    const NOTIFICATION_BODY = 'la contraseña introducida es incorrecta';
     new Notification({title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY}).show();
-    
+
 })
 
 //TEMPLATE DE MENU PARA VENTANA DE LOS GRUPOS
